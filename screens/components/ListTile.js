@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions, PanResponder, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/actions';
+
 const { height, width } = Dimensions.get('window');
-export default class ListTile extends Component {
+
+class ListTile extends Component {
 
     constructor(props) {
         super(props);
@@ -100,6 +104,23 @@ export default class ListTile extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        list: state.list,
+    };
+};
+
+const mapDispatchToProps = {
+    favTapped: actions.favTapped,
+    heartTapped: actions.heartTapped,
+    deleteTapped: actions.deleteTapped
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ListTile);
 
 const styles = StyleSheet.create({
     listItem: {

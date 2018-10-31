@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/actions';
 
-export default class Filter extends Component {
+class Filter extends Component {
     constructor(props) {
         super(props);
         this.iconColor = this.iconColor.bind(this);
@@ -34,7 +36,7 @@ export default class Filter extends Component {
                 </View>
                 <View style={{ flexDirection: 'row', flex: 1, padding: 20 }}>
                     <Text style={{ flex: 3, fontSize: 15, color: "white" }}>Favourite</Text>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={this.filterOptionColorChange("fav")} ><Icon name="check" size={25} color={this.iconColor(this.state.isFavSelected)} /></TouchableOpacity>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('screen1')} ><Icon name="check" size={25} color={this.iconColor(this.state.isFavSelected)} /></TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', flex: 1, padding: 20 }}>
                     <Text style={{ flex: 3, fontSize: 15, color: "white" }}>Hearted</Text>
@@ -55,3 +57,23 @@ export default class Filter extends Component {
         );
     }
 }
+
+
+
+const mapStateToProps = state => {
+    return {
+        list: state.list,
+    };
+};
+
+const mapDispatchToProps = {
+    filterFavs: actions.filterFavs,
+    filterHearts: actions.filterHearts,
+    flterFavsAndHearts: actions.flterFavsAndHearts,
+
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Filter);

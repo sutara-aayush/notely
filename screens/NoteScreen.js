@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../redux/actions';
+
 const { height, width } = Dimensions.get('window');
 
-export default class NoteScreen extends Component {
+class NoteScreen extends Component {
 
     constructor(props) {
         super(props)
@@ -28,6 +31,21 @@ export default class NoteScreen extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        list: state.list,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchData: actions.fetchData,
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NoteScreen);
 
 const styles = StyleSheet.create({
     text: {

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, SafeAreaView } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, DrawerItems } from 'react-navigation';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { reducer } from './redux/reducer';
 import HomeScreen from './screens/HomeScreen';
 import NoteScreen from './screens/NoteScreen';
 import AddScreen from './screens/AddScreen';
@@ -20,9 +23,12 @@ export default class App extends Component {
   componentDidMount() {
     SplashScreen.hide();
   }
+
   render() {
     return (
-      <SideDrawer />
+      <Provider store={createStore(reducer)}>
+        <SideDrawer />
+      </Provider>
     );
   }
 }
@@ -43,6 +49,13 @@ const ScreenNavigator = new StackNavigator({
   }
 });
 
+// const CustomDrawer = (props) => (
+  
+//     <DrawerItems {...props}  />   
+//     <Filter/>
+  
+// );
+
 const SideDrawer = new DrawerNavigator({
   screen1: {
     screen: ScreenNavigator
@@ -55,5 +68,5 @@ const SideDrawer = new DrawerNavigator({
     contentOptions: {
       activeTintColor: "green",
       inactiveTintColor: "white"
-    }
+    },
   });

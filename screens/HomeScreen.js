@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, View, FlatList, StatusBar, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
+import * as actions from '../redux/actions';
 import ListTile from './components/ListTile';
 import list from '../assets/DataList';
 
@@ -9,7 +11,7 @@ import list from '../assets/DataList';
 const { height, width } = Dimensions.get('window');
 
 
-export default class HomeScreen extends PureComponent {
+class HomeScreen extends PureComponent {
     static navigationOptions = ({ navigation }) => {
         const params = navigation.state.params || {};
         return {
@@ -135,6 +137,21 @@ export default class HomeScreen extends PureComponent {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        list: state.list,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchData: actions.fetchData,
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HomeScreen);
 
 const styles = StyleSheet.create({
     separatorStyle: {

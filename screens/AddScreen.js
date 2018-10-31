@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../redux/actions';
 
 const { height, width } = Dimensions.get('window');
 
-export default class AddScreen extends Component {
+class AddScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -70,3 +72,18 @@ export default class AddScreen extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        list: state.list,
+    };
+};
+
+const mapDispatchToProps = {
+    saveTapped: actions.saveTapped,
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddScreen);
